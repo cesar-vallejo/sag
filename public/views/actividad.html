@@ -1,0 +1,37 @@
+<div class="well">
+    <form name="actividadForm" class="form-horizontal" role="form" ng-submit="actividadForm.$valid && save()" novalidate>
+        <fieldset>
+            <legend class="text-primary">{{titulo | accion}} Actividad</legend>
+
+            <div ng-if="showAlert" class="alert alert-dismissable alert-{{alert}}">
+              <button class="close" ng-click="toogle()">&times;</button>
+              {{message}}
+            </div>
+
+            <actividad-registro></actividad-registro>
+
+            <div class="col-sm-12" ng-controller="TabsController as tabs">
+                <ul class="nav nav-tabs nav-justified">
+                    <li ng-class="{ active:tabs.tab === 1 }"><a ng-click="tabs.selectTab(1)">Correo</a></li>
+                    <li ng-class="{ active:tabs.tab === 2 }"><a ng-click="tabs.selectTab(2)">Configuración</a></li>
+                </ul>
+                <div class="tab-content">
+                    <div ng-show="tabs.tab === 1">
+                        <actividad-correo></actividad-correo>
+                    </div>
+                    <div ng-show="tabs.tab === 2">
+                        <actividad-configuracion></actividad-configuracion>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <div class="col-sm-4 col-sm-offset-8 text-right">
+                    <a href="/#actividades" class="btn btn-default">{{boton}}</a>
+                    <a ng-if="show" href="/#actividades/editar/{{actividad.idActividad}}" class="btn btn-primary">Editar actividad</a>
+                    <button ng-if="!show" ng-disabled="actividadForm.$invalid" type="submit" class="btn btn-primary">Guardar</button>
+                </div>
+            </div>
+        </fieldset>
+    </form>
+</div>

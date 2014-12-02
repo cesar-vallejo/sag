@@ -1,0 +1,91 @@
+<div class="form-group">
+    <label for="selTipoDeAlerta" class="col-sm-2 control-label">Tipo de alerta:</label>
+    <div class="col-sm-4">
+        <select class="form-control" id="selTipoDeAlerta" ng-model="actividad.tipoDeAlerta" ng-options="tal.nombre for tal in tiposDeAlerta" ng-disabled="{{readonly}}" required>
+            <option value="">-- SELECCIONAR --</option>
+        </select>
+    </div>
+</div>
+
+<div class="form-group">
+    <label for="txtNombre" class="col-sm-2 control-label">Nombre:</label>
+    <div class="col-sm-4">
+        <input type="text" class="form-control" name="txtNombre" placeholder="Ingresa un nombre" ng-model="actividad.nombre" ng-readonly="{{readonly}}" required>
+    </div>
+</div>
+
+<div class="form-group">
+    <label for="txtDescripcion" class="col-sm-2 control-label">Descripción:</label>
+    <div class="col-sm-10">
+        <textarea class="form-control" name="txtDescripcion" placeholder="Ingresa una descripción" rows="3" ng-model="actividad.descripcion" ng-readonly="{{readonly}}" required></textarea>
+    </div>
+</div>
+
+<div class="form-group">
+    <label for="txtCampo1" class="col-sm-2 control-label">Campo 1:</label>
+    <div class="col-sm-4">
+        <input type="text" class="form-control" id="txtCampo1" placeholder="Ingresar un valor para Campo 1" ng-model="actividad.campo1" ng-readonly="{{readonly}}">
+    </div>
+
+    <label for="txtCampo2" class="col-sm-2 control-label">Campo 2:</label>
+    <div class="col-sm-4">
+        <input type="text" class="form-control" id="txtCampo2" placeholder="Ingresar un valor para Campo 2" ng-model="actividad.campo2" ng-readonly="{{readonly}}">
+    </div>            
+</div>
+
+<div class="form-group">
+    <label for="txtCampo3" class="col-sm-2 control-label">Campo 3:</label>
+    <div class="col-sm-4">
+        <input type="text" class="form-control" id="txtCampo3" placeholder="Ingresar un valor para Campo 3" ng-model="actividad.campo3" ng-readonly="{{readonly}}">
+    </div>
+
+    <label for="txtCampo4" class="col-sm-2 control-label">Campo 4:</label>
+    <div class="col-sm-4">
+        <input type="text" class="form-control" id="txtCampo4" placeholder="Ingresar un valor para Campo 4" ng-model="actividad.campo4" ng-readonly="{{readonly}}">
+    </div>
+</div>
+
+<div class="form-group">
+    <label for="txtCampo5" class="col-sm-2 control-label">Campo 5:</label>
+    <div class="col-sm-4">
+        <input type="text" class="form-control" id="txtCampo5" placeholder="Ingresar un valor para Campo 5" ng-model="actividad.campo5" ng-readonly="{{readonly}}">
+    </div>
+
+    <label for="txtCampo6" class="col-sm-2 control-label">Campo 6:</label>
+    <div class="col-sm-4">
+        <input type="text" class="form-control" id="txtCampo6" placeholder="Ingresar un valor para Campo 6" ng-model="actividad.campo6" ng-readonly="{{readonly}}">
+    </div>
+</div>
+
+<div class="form-group">
+    <label for="txtCampo7" class="col-sm-2 control-label">Campo 7:</label>
+    <div class="col-sm-4">
+        <input type="text" class="form-control" id="txtCampo7" placeholder="Ingresar un valor para Campo 7" ng-model="actividad.campo7" ng-readonly="{{readonly}}">
+    </div> 
+    
+    <label for="txtCampo8" class="col-sm-2 control-label">Campo 8:</label>
+    <div class="col-sm-4">
+        <input type="text" class="form-control" id="txtCampo8" placeholder="Ingresar un valor para Campo 8" ng-model="actividad.campo8" ng-readonly="{{readonly}}">
+    </div>
+</div>
+
+<div class="form-group">
+    <label for="txtCampo9" class="col-sm-2 control-label">Campo 9:</label>
+    <div class="col-sm-4">
+        <input type="text" class="form-control" id="txtCampo9" placeholder="Ingresar un valor para Campo 9" ng-model="actividad.campo9" ng-readonly="{{readonly}}">
+    </div> 
+
+    <label for="txtCampo10" class="col-sm-2 control-label">Campo 10:</label>
+    <div class="col-sm-4">
+        <input type="text" class="form-control" id="txtCampo10" placeholder="Ingresar un valor para Campo 10" ng-model="actividad.campo10" ng-readonly="{{readonly}}">
+    </div>
+</div>
+
+<div class="form-group">
+    <label for="selEstado" class="col-sm-2 control-label">Estado:</label>
+    <div class="col-sm-2">
+        <select class="form-control" id="selEstado" ng-model="actividad.estado" ng-options="est.nombre for est in estados" ng-disabled="{{readonly}}" required>
+            <option value="">-- SELECCIONAR --</option>
+        </select>
+    </div>
+</div>

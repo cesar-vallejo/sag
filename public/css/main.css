@@ -1,0 +1,28 @@
+body {
+  padding-top: 50px;
+}
+
+.navbar-brand {
+  font-weight: 800;
+}
+
+.navbar-brand img {
+  width: 24px;
+}
+
+.ng-invalid.ng-dirty {
+  border-color: #D9230F;
+}
+
+.ng-valid.ng-dirty {
+  border-color: #468847;
+}
+
+.form-group{
+	margin-bottom:5px;
+	margin-top:5px;
+}
+.page-header{
+	padding-bottom: 0px;
+	margin:0px 0 0px;
+}
