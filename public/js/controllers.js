@@ -1,74 +1,94 @@
 (function (_) {
 	angular.module('sag.controllers', [])
-		.controller('TiposDeAlertaController', ['$scope', '$routeParams', 'tipoDeAlertaService', function ($scope, $routeParams, tipoDeAlertaService) {
-	  		$scope.tiposDeAlerta = tipoDeAlertaService.all("tipoDeAlerta");
-		
+
+		.controller('TiposDeAlertaController', ['$scope', '$routeParams', '$location', 'tiposDeAlertaFactory', 'tipoDeAlertaFactory', 'Restangular', function ($scope, $routeParams, $location, tiposDeAlertaFactory, tipoDeAlertaFactory, Restangular) {
+
 			var idOficina = $routeParams.idOficina;
+			var idTipoDeAlerta = $routeParams.idTipoDeAlerta;
 
-			console.log("idOficina: " + idOficina);
+			$scope.add = function () {
+				$location.path('/tipos-de-alerta-agregar');
+			};
 
-			var id = $routeParams.id;
+			$scope.edit = function (idOficina, idTipoDeAlerta) {
+				$location.path('/tipos-de-alerta-editar/' + idOficina + '/' + idTipoDeAlerta);
+			};
 
-			if (id) {
-				tipoDeAlertaService.remove("tipoDeAlerta", id);
-				$scope.tiposDeAlerta = tipoDeAlertaService.all("tipoDeAlerta");
-			}		
+			$scope.detail = function (idOficina, idTipoDeAlerta) {
+				$location.path('/tipos-de-alerta-detalle/' + idOficina + '/' + idTipoDeAlerta);
+			};
+
+			$scope.delete = function (idOficina, idTipoDeAlerta) {
+				tipoDeAlertaFactory.delete({idOficina: idOficina, idTipoDeAlerta: idTipoDeAlerta});
+				$scope.tiposDeAlerta = tiposDeAlertaFactory.query({idOficina: idOficina});
+			};
+
+			//$scope.tiposDeAlerta = tiposDeAlertaFactory.query({idOficina: idOficina});
+			$scope.tiposDeAlerta = Restangular.all('TipoAlertaService.svc/TiposDeAlerta').getList().$object;
 		}])
 
-		.controller('TipoDeAlertaController', ['$scope', '$http', '$routeParams', 'tipoDeAlertaService', 'estadoService', function ($scope, $http, $routeParams, tipoDeAlertaService, estadoService) {			
+		.controller('TipoDeAlertaAgregarController', ['$scope', '$location', 'tiposDeAlertaFactory', 'Restangular', function ($scope, $location, tiposDeAlertaFactory, Restangular) {
+			$scope.create = function () {
+				$scope.tipoDeAlerta.oficina = {};
+				$scope.tipoDeAlerta.oficina.idOficina = 1;
 
-			// PRUEBA DE SERVICIOS - INICIO
-		    var logResult = function (str, data, status, headers, config)
-		    {
-		      return str + "\n\n" +
-		        "data: " + data + "\n\n" +
-		        "status: " + status + "\n\n";
-		    };
+				//tiposDeAlertaFactory.create($scope.tipoDeAlerta);
+				//$location.path('/tipos-de-alerta/' + $scope.tipoDeAlerta.oficina.idOficina);
 
-		    $scope.simpleGetCall = function () {
-				$http.get("http://localhost:7080/TipoAlertaService.svc/TiposAlerta/1")
-				.success(function(response) {$scope.simpleGetCallResult = response;});
+				//var obj = $scope.tipoDeAlerta;
+			    //Restangular.all('TipoAlertaService.svc/TiposDeAlerta').post(obj);
+
+			    debugger
+
+		        var obj = {"oficina": {"idOficina": 1},"nombre": "TIPO DE ALERTA 10","descripcion": "TIPO DE ALERTA 10"};
+		        /*{
+		            ID: 10,
+		            FirstName: 'JoJo',
+		            LastName: 'Pikidily'
+		        };*/
+
+				Restangular.all('TiposDeAlerta').post(obj).then(function (response) {
+				    console.log(response);
+				});	
 			};
-			// PRUEBA DE SERVICIOS - FIN
+		}])	
 
-			var accion = $routeParams.accion;
-
-			$scope.boton = "Cancelar";
-
-			if (accion === "editar") {
-				$scope.readonly = false;
-				$scope.titulo = "Editar";
-			} else{
-				if (accion === "ver") {
-					$scope.readonly = true;
-					$scope.titulo = "Detalle de";
-
-					$scope.show = true;
-				}
-			}
+		.controller('TipoDeAlertaDetalleController', ['$scope', '$routeParams', '$location', 'tipoDeAlertaFactory', 'Restangular', function ($scope, $routeParams, $location, tipoDeAlertaFactory, Restangular) {
 			
 			//$scope.estado = {};
 			//estadoService.save("estado", $scope.estado);
 
-			$scope.tipoDeAlerta = {};
+			/*$scope.tipoDeAlerta = {};
 
 			$scope.estados = [];
 			$scope.estados = estadoService.all("estado");
 
 			if (accion === "editar" || accion === "ver") {
-				var id = $routeParams.id;
 
-				$scope.tipoDeAlerta = tipoDeAlertaService.get("tipoDeAlerta", id);				
+				var idOficina = $routeParams.idOficina;
+				var idTipoDeAlerta = $routeParams.idTipoDeAlerta;
 
-				for (var i = 0; i < $scope.estados.length; i++) {
-					if ($scope.tipoDeAlerta.estado.idEstado === $scope.estados[i].idEstado) {
-						$scope.tipoDeAlerta.estado = $scope.estados[i];
-						break;
-					}
-				};				
-			}
+		        tipoDeAlertaService.get(idOficina, idTipoDeAlerta).then(function (data) {
+		          $scope.tipoDeAlerta = data;
+		        });
+			}*/
 
-			$scope.save = function() {
+			var idOficina = $routeParams.idOficina;
+			var idTipoDeAlerta = $routeParams.idTipoDeAlerta;
+			
+		    $scope.update = function () {
+		        tipoDeAlertaFactory.update($scope.tipoDeAlerta);
+		        $location.path('/tipos-de-alerta/' + $scope.tipoDeAlerta.oficina.idOficina);
+		    };
+
+		    $scope.cancel = function () {
+		        $location.path('/tipos-de-alerta/' + $scope.tipoDeAlerta.oficina.idOficina);
+		    };
+
+			//$scope.tipoDeAlerta = tipoDeAlertaFactory.get({idOficina: idOficina, idTipoDeAlerta: idTipoDeAlerta});
+			$scope.tipoDeAlerta = Restangular.one('TipoAlertaService.svc/' + idOficina + '/' + idTipoDeAlerta).get().$object;
+
+			/*$scope.save = function() {
 				tipoDeAlertaService.save("tipoDeAlerta", $scope.tipoDeAlerta, accion);
 				$scope.tiposDeAlerta = tipoDeAlertaService.all("tipoDeAlerta");
 
@@ -79,7 +99,7 @@
 
 				//$scope.alert = "danger";
 				//$scope.message = "Se ha presentado los siguientes errores:";
-			};
+			};*/
 
 			$scope.toogle = function() {
 				$scope.showAlert = !$scope.showAlert;
@@ -88,9 +108,9 @@
 
 		.controller('EstadoController', ['$scope', '$routeParams', 'estadoService', function ($scope, $routeParams, estadoService) {
 	  		$scope.estados = estadoService.all("estado");
-		}])
+		}]);
 
-		.controller('ActividadesController', ['$scope', '$routeParams', 'actividadService', function ($scope, $routeParams, actividadService) {
+		/*.controller('ActividadesController', ['$scope', '$routeParams', 'actividadService', function ($scope, $routeParams, actividadService) {
 	  		$scope.actividades = actividadService.all("actividad");
 			
 			var id = $routeParams.id;
@@ -180,5 +200,5 @@
 			this.selectTab = function (tab) {
 				this.tab = tab;
 			};
-		});
+		});*/
 })(_);

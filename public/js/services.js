@@ -1,96 +1,31 @@
 (function(){
 
-	angular.module('sag.services', [])
+	var url = 'http://localhost:7080/TipoAlertaService.svc';
 
-		.factory('tipoDeAlertaService', ['$window', function ($window) {
+	angular.module('sag.services', ['ngResource'])
 
-			var localStorage = $window.localStorage;
+		.factory('tiposDeAlertaFactory', function ($resource) {
+		    //return $resource(url + '/:idOficina', {}, {
+	    	return $resource(url + '/TiposDeAlerta', {}, {
+		        query: { method: 'GET', params: {idOficina: '@idOficina'}, isArray: true },
+		        create: {
+		            method:"POST",		            
+		            isArray:true,
+		            //headers:{'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'}
+		            headers:{'Content-Type':'application/JSON'}
+		        }
+		    })
+		})
 
-	      	function all(key) {
-	      		var tiposDeAlerta = localStorage.getItem(key);
+		.factory('tipoDeAlertaFactory', function ($resource) {
+		    return $resource(url + '/:idOficina/:idTipoDeAlerta', {}, {
+		        get: { method: 'GET', params: {idOficina: '@idOficina', idTipoDeAlerta: '@idTipoDeAlerta'} },
+		        update: { method: 'PUT' },
+		        delete: { method: 'DELETE', params: {idOficina: '@idOficina', idTipoDeAlerta: '@idTipoDeAlerta'} }
+		    })
+		})
 
-	      		if (!tiposDeAlerta) {
-	      			tiposDeAlerta = [];
-	      		} else {
-	      			tiposDeAlerta = JSON.parse(tiposDeAlerta);
-	      		}				
-
-	      		return tiposDeAlerta;
-	      	}
-
-	      	function get(key, id) {
-	      		var tiposDeAlerta = all(key);
-
-				var tipoDeAlerta = {};
-
-	      		for (var i = 0; i < tiposDeAlerta.length; i++) {
-	      			if (tiposDeAlerta[i].idTipoDeAlerta == id) {
-						tipoDeAlerta = tiposDeAlerta[i];
-						break;
-	      			};
-	      		};
-
-				return tipoDeAlerta;
-	      	}
-
-	      	function save(key, tipoDeAlerta, accion) {
-				var tiposDeAlerta = all(key);
-
-	      		if (!accion) {
-					tipoDeAlerta.idOficina = "1";
-					tipoDeAlerta.idTipoDeAlerta = tiposDeAlerta.length + 1;
-
-		      		tiposDeAlerta.push(tipoDeAlerta);
-		      		localStorage.setItem(key, JSON.stringify(tiposDeAlerta));
-	      		} else{
-		      		for (var i = 0; i < tiposDeAlerta.length; i++) {
-		      			if (tiposDeAlerta[i].idTipoDeAlerta == tipoDeAlerta.idTipoDeAlerta) {
-							
-							tiposDeAlerta[i].idOficina = "1";
-							tiposDeAlerta[i].nombre = tipoDeAlerta.nombre;
-							tiposDeAlerta[i].descripcion = tipoDeAlerta.descripcion;
-							tiposDeAlerta[i].campo1 = tipoDeAlerta.campo1;
-							tiposDeAlerta[i].campo2 = tipoDeAlerta.campo2;
-							tiposDeAlerta[i].campo3 = tipoDeAlerta.campo3;
-							tiposDeAlerta[i].campo4 = tipoDeAlerta.campo4;
-							tiposDeAlerta[i].campo5 = tipoDeAlerta.campo5;
-							tiposDeAlerta[i].campo6 = tipoDeAlerta.campo6;
-							tiposDeAlerta[i].campo7 = tipoDeAlerta.campo7;
-							tiposDeAlerta[i].campo8 = tipoDeAlerta.campo8;
-							tiposDeAlerta[i].campo9 = tipoDeAlerta.campo9;
-							tiposDeAlerta[i].campo10 = tipoDeAlerta.campo10;
-							tiposDeAlerta[i].estado = tipoDeAlerta.estado;
-
-							localStorage.setItem(key, JSON.stringify(tiposDeAlerta));
-
-							break;
-		      			};
-		      		};
-	      		}
-	      	}
-
-	      	function remove(key, id) {
-	      		var tiposDeAlerta = all(key);
-
-	      		for (var i = 0; i < tiposDeAlerta.length; i++) {
-	      			if (tiposDeAlerta[i].idTipoDeAlerta == id) {
-						tiposDeAlerta.splice(i, 1);
-						break;
-	      			};
-	      		};
-
-				localStorage.setItem(key, JSON.stringify(tiposDeAlerta));
-	      	}
-
-			return {
-				all: all,				
-				get: get,
-				save: save,
-				remove: remove
-			};
-		}])
-
-		.factory('estadoService', ['$window', function ($window) {
+		/*.factory('estadoService', ['$window', function ($window) {
 
 			var localStorage = $window.localStorage;
 
@@ -120,7 +55,7 @@
 	      		all: all,
 	      		save: save
 	      	};
-	   	}])
+	   	}])*/
 
 		.factory('actividadService', ['$window', function ($window) {
 

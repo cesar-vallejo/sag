@@ -4,7 +4,7 @@
 	</div>
 	
 	<div class="pull-right">
-		<a href="#tipos-de-alerta/agregar">Agregar tipo de alerta</a>
+		<a ng-click="add()" class="btn btn-link">Agregar tipo de alerta</a>
 	</div>
 	
 	<table class="table table-striped table-hover">
@@ -24,9 +24,9 @@
 		      <td>{{tipo.descripcion}}</td>
 		      <td>{{tipo.estado.nombre}}</td>
 		      <td>
-		      	<a href="/#tipos-de-alerta/editar/{{ tipo.idTipoDeAlerta }}">Editar</a> |
-		      	<a href="/#tipos-de-alerta/ver/{{ tipo.idTipoDeAlerta }}">Ver detalle</a> |
-		      	<a href="/#tipos-de-alerta/eliminar/{{ tipo.idTipoDeAlerta }}">Eliminar</a>
+		      	<a ng-click="edit(tipo.oficina.idOficina, tipo.idTipoDeAlerta)">Editar</a> | 
+		      	<a ng-click="detail(tipo.oficina.idOficina, tipo.idTipoDeAlerta)">Ver detalle</a> | 
+		      	<a ng-click="delete(tipo.oficina.idOficina, tipo.idTipoDeAlerta)">Eliminar</a>
 		      </td>
 		    </tr>
 		</tbody>
